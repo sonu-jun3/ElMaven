@@ -9,7 +9,7 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-make -j $(nproc)
+make -j4
 
 
 if [ -f tests/MavenTests/test.xml ]; then
@@ -27,3 +27,5 @@ if [ $systemType == "linux" ] && [ $flag == 10 ]; then
     genhtml coverage.info --output-directory coverage
 fi
 
+cd tests/featureTesting/
+python main.py
