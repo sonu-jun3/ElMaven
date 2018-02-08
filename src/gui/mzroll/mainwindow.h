@@ -288,7 +288,7 @@ protected:
 	void dropEvent(QDropEvent *event);
 
 public Q_SLOTS:
-	void updateRetentionTimes(int alignmentRunIndex);
+	void updateAlignmentRun(int alignmentRunIndex);
 	void showAlignmetErrorDialog(QString errorMessage);
 	void setMassCutoffType(QString massCutoffType);
 	void printvalue();
@@ -432,7 +432,7 @@ private:
     QMap< QPointer<TableDockWidget>, QToolButton*> groupTablesButtons;
 	EicWidget *eicWidget; //plot of extractred EIC
 	History history;
-
+	PeakGroup* currentGroupInEic;
 	MassCutoff *_massCutoffWindow;
 
 	QToolBar* sideBar;

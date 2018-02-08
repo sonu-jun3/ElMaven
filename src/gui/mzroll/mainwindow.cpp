@@ -2531,8 +2531,8 @@ void MainWindow::createToolBars() {
 	settings->endGroup();
 
 	alignmentRun = new QComboBox(hBox);
-	alignmentRun->addItem("Unaligned");
-	connect(alignmentRun, SIGNAL(currentIndexChanged(int)), this, SLOT(updateRetentionTimes(int)));
+	alignmentRun->addItem("Unaligned     ");
+	connect(alignmentRun, SIGNAL(currentIndexChanged(int)), this, SLOT(updateAlignmentRun(int)));
 
 	layout->addWidget(alignmentRun, 0 );
 	layout->addWidget(ionizationModeLabel, 0);
@@ -2608,8 +2608,9 @@ void MainWindow::createToolBars() {
 	addToolBar(Qt::RightToolBarArea, sideBar);
 }
 
-void MainWindow::updateRetentionTimes(int alignmentRunIndex){
-	qDebug()<<alignmentRunIndex<<"===========";
+void MainWindow::updateAlignmentRun(int alignmentRunIndex){
+	setPeakGroup(currentGroupInEic);
+	qDebug()<<alignmentRunIndex<<" ===========";
 }
 void MainWindow::setMassCutoffType(QString massCutoffType){
 	double cutoff=massCutoffWindowBox->value();
@@ -2703,6 +2704,9 @@ void MainWindow::setPeakGroup(PeakGroup* group) {
 	if (group == NULL)
 		return;
 
+	group->updateRetentionTimes(alignmentRun->currentIndex());
+	currentGroupInEic=group;
+	qDebug()<<" xxx===========";	
 	searchText->setText(QString::number(group->meanMz, 'f', 8));
 
 	if (eicWidget && eicWidget->isVisible()) {
@@ -2805,6 +2809,10 @@ void MainWindow::Align() {
 }
 
 void MainWindow::plotAlignmentVizAllGroupGraph(QList<PeakGroup> allgroups) {
+	QString alignmentRunLabel = "Currection ";
+	alignmentRunLabel += QString::number(alignmentRun->count());
+	alignmentRun->addItem(alignmentRunLabel);
+	alignmentRun->setCurrentIndex(alignmentRun->count()-1);
 	alignmentVizAllGroupsWidget->plotGraph(allgroups);
 }
 

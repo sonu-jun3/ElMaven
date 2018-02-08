@@ -143,7 +143,17 @@ void PeakGroup::copyChildren(const PeakGroup& o) {
     for(unsigned int i=0; i < children.size(); i++ ) children[i].parent = this;
 }
 void PeakGroup::updateRetentionTimes(int alignmentIndex){
-    
+    for(int i=0;i<peakCount();++i){
+        Peak& peak=peaks[i];
+        mzSample* sample = peak.getSample();
+        if(alignmentIndex==0 && sample->originalRetentionTimes.size()){
+            Scan* scan=peak.getScan();
+            if(scan) peak.rt=sample->originalRetentionTimes[scan->scannum];
+        }
+        else if(sample->currectedRetentionTimesList.find(alignmentIndex) != sample->currectedRetentionTimesList.end()){
+            peak.rt=sample->currectedRetentionTimesList[alignmentIndex][peak.scan];
+        }
+    }
 }
 bool PeakGroup::isPrimaryGroup() {
     if(compound && compound->getPeakGroup() == this) return true;
