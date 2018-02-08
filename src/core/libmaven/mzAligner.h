@@ -12,7 +12,7 @@ using namespace std;
 class Aligner {
    public:
     Aligner();
-    void preProcessing(vector<PeakGroup*>& peakgroups,bool alignWrtExpectedRt);
+    void preProcessing(vector<PeakGroup*>& peakgroups,bool alignWrtExpectedRt,int alignmentRunIndex);
     void doAlignment(vector<PeakGroup*>& peakgroups);
     vector<double> groupMeanRt();
     double checkFit();
@@ -45,5 +45,6 @@ class Aligner {
     vector<PeakGroup*> allgroups;
     int maxItterations;
     int polynomialDegree;
+    int alignmentRunCount;
 
 };

@@ -838,6 +838,10 @@ class mzSample
 
     /** saved retention times prior to alignment */
     vector<float> originalRetentionTimes;
+    /**
+     * holds retention times at different run of aligment
+     */
+    map< int,vector<float> > currectedRetentionTimesList;
 
     vector<double> polynomialAlignmentTransformation; //parameters for polynomial transform
 

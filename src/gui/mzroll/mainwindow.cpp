@@ -2530,6 +2530,11 @@ void MainWindow::createToolBars() {
 	Q_FOREACH(QString key, keys)suggestPopup->addToHistory(key, settings->value(key).toInt());
 	settings->endGroup();
 
+	alignmentRun = new QComboBox(hBox);
+	alignmentRun->addItem("Unaligned");
+	connect(alignmentRun, SIGNAL(currentIndexChanged(int)), this, SLOT(updateRetentionTimes(int)));
+
+	layout->addWidget(alignmentRun, 0 );
 	layout->addWidget(ionizationModeLabel, 0);
 	layout->addWidget(new QLabel("Charge", hBox), 0);
 	layout->addWidget(ionChargeBox, 0);
@@ -2603,6 +2608,9 @@ void MainWindow::createToolBars() {
 	addToolBar(Qt::RightToolBarArea, sideBar);
 }
 
+void MainWindow::updateRetentionTimes(int alignmentRunIndex){
+	qDebug()<<alignmentRunIndex<<"===========";
+}
 void MainWindow::setMassCutoffType(QString massCutoffType){
 	double cutoff=massCutoffWindowBox->value();
 	string type=massCutoffType.toStdString();

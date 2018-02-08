@@ -224,6 +224,7 @@ class MavenParameters
         vector<PeakGroup> allgroups;
         vector<PeakGroup> undoAlignmentGroups;
         int alignButton;
+        int alignmentRunIndex;
         MassCalculator mcalc;
         Classifier* clsf;
         PeakGroup* _group;

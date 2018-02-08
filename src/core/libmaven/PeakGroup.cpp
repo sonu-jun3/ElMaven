@@ -142,7 +142,9 @@ void PeakGroup::copyChildren(const PeakGroup& o) {
     children = o.children;
     for(unsigned int i=0; i < children.size(); i++ ) children[i].parent = this;
 }
-
+void PeakGroup::updateRetentionTimes(int alignmentIndex){
+    
+}
 bool PeakGroup::isPrimaryGroup() {
     if(compound && compound->getPeakGroup() == this) return true;
     return false;

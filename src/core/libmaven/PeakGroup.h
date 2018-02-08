@@ -132,7 +132,11 @@ class PeakGroup{
         //for sample contrasts  ratio and pvalue
         float changeFoldRatio;
         float changePValue;
-
+        /**
+         * this method updates retention times of all peaks with corrected retention times
+         * at alignment index of alignmentIndex.
+         */
+        void updateRetentionTimes(int alignmentIndex);
         /**
          * [hasSrmId ]
          * @method hasSrmId

@@ -132,6 +132,7 @@ public:
 	bool aligned = false;
 	map<pair<string,string>, double> deltaRt;
 
+	QComboBox *alignmentRun;
 	AutoSave* autosave;
 	QSet<QString> SaveMzrollListvar;
 	MavenParameters* mavenParameters;
@@ -287,6 +288,7 @@ protected:
 	void dropEvent(QDropEvent *event);
 
 public Q_SLOTS:
+	void updateRetentionTimes(int alignmentRunIndex);
 	void showAlignmetErrorDialog(QString errorMessage);
 	void setMassCutoffType(QString massCutoffType);
 	void printvalue();

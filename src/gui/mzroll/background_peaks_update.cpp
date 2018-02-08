@@ -465,7 +465,7 @@ void BackgroundPeakUpdate::align() {
                         mainwindow->alignmentPolyVizDockWidget->setDegreeMap(aligner.sampleDegree);
                         mainwindow->alignmentPolyVizDockWidget->setCoefficientMap(aligner.sampleCoefficient);
                 } else if (alignAlgo == 1) {
-                        aligner.preProcessing(groups, mavenParameters->alignWrtExpectedRt);
+                        aligner.preProcessing(groups, mavenParameters->alignWrtExpectedRt, mavenParameters->alignmentRunIndex);
                         // initialize processedDataFromPython with null 
                         processedDataFromPython="";
                          /**runPythonProg()

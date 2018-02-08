@@ -13,10 +13,10 @@ Aligner::Aligner() {
        polynomialDegree=3;
 }
 
-void Aligner::preProcessing(vector<PeakGroup*>& peakgroups, bool alignWrtExpectedRt) {
+void Aligner::preProcessing(vector<PeakGroup*>& peakgroups, bool alignWrtExpectedRt,int alignmentRunIndex) {
 
     if (peakgroups.size() == 0) return;
-    
+    alignmentRunCount=alignmentRunIndex;
     allgroups = peakgroups;
 
     groupsJson = QJsonObject();
@@ -81,8 +81,15 @@ void Aligner::updateSampleRts(QJsonObject &sampleRts)
         auto it = sampleRts.find(QString(sm->getSampleName().c_str()));
         if (it != sampleRts.end()) {
             QJsonArray rtArr = it.value().toArray();
-            for(int index = 0; index != rtArr.size(); index++)
+            vector<float> currectedRetentionTimes;
+            for(int index = 0; index != rtArr.size(); index++) {
                 sm->scans[index]->rt =  (float)rtArr[index].toDouble();
+                currectedRetentionTimes.push_back(sm->scans[index]->rt);
+            }
+            /**
+             * store retention times for different run of alignment to restore all alignment run
+             */
+            sm->currectedRetentionTimesList[alignmentRunCount]=currectedRetentionTimes;
         }
     }
 }
