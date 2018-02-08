@@ -2610,7 +2610,6 @@ void MainWindow::createToolBars() {
 
 void MainWindow::updateAlignmentRun(int alignmentRunIndex){
 	setPeakGroup(currentGroupInEic);
-	qDebug()<<alignmentRunIndex<<" ===========";
 }
 void MainWindow::setMassCutoffType(QString massCutoffType){
 	double cutoff=massCutoffWindowBox->value();
@@ -2706,7 +2705,6 @@ void MainWindow::setPeakGroup(PeakGroup* group) {
 
 	group->updateRetentionTimes(alignmentRun->currentIndex());
 	currentGroupInEic=group;
-	qDebug()<<" xxx===========";	
 	searchText->setText(QString::number(group->meanMz, 'f', 8));
 
 	if (eicWidget && eicWidget->isVisible()) {

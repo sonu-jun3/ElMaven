@@ -81,10 +81,10 @@ void Aligner::updateSampleRts(QJsonObject &sampleRts)
         auto it = sampleRts.find(QString(sm->getSampleName().c_str()));
         if (it != sampleRts.end()) {
             QJsonArray rtArr = it.value().toArray();
-            vector<float> currectedRetentionTimes;
+            vector<float> currectedRetentionTimes(sm->scans.size()+1);
             for(int index = 0; index != rtArr.size(); index++) {
                 sm->scans[index]->rt =  (float)rtArr[index].toDouble();
-                currectedRetentionTimes.push_back(sm->scans[index]->rt);
+                currectedRetentionTimes[sm->scans[index]->scannum]=sm->scans[index]->rt;
             }
             /**
              * store retention times for different run of alignment to restore all alignment run
