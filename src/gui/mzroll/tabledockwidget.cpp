@@ -9,6 +9,8 @@ TableDockWidget::TableDockWidget(MainWindow* mw, QString title, int numColms, in
     numColms=11;
     viewType = groupView;
 
+    tableDockWidgetBackend=new TableDockWidgetBackend();
+
     treeWidget=new QTreeWidget(this);
     treeWidget->setSortingEnabled(false);
     treeWidget->setColumnCount(numColms);
@@ -1457,22 +1459,9 @@ void TableDockWidget::contextMenuEvent ( QContextMenuEvent * event )
 void TableDockWidget::saveModel() { 
     LOGD;
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Classification Model to a File"));
-    if (fileName.isEmpty()) return;
-
-    if(!fileName.endsWith(".model",Qt::CaseInsensitive)) fileName = fileName + ".model";
-
-    Classifier* clsf = _mainwindow->getClassifier();
-    if (clsf != NULL ) {
-        clsf->saveModel(fileName.toStdString());
-    }
-
-    if (clsf) {
-        vector<PeakGroup*>groups;
-        for(int i=0; i < allgroups.size(); i++ )
-            if(allgroups[i].label == 'g' || allgroups[i].label == 'b' )
-                groups.push_back(&allgroups[i]);
-        clsf->saveFeatures(groups,fileName.toStdString() + ".csv");
-    }
+    tableDockWidgetBackend->saveModel(_mainwindow->getClassifier(),
+                                        fileName,
+                                        allgroups);
 }
 
 

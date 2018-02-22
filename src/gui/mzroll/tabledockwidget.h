@@ -10,7 +10,7 @@
 #include "numeric_treewidgetitem.h"
 #include "QHistogramSlider.h"
 #include "saveJson.h"
-
+#include "tabledockwidgetbackend.h"
 class MainWindow;
 class AlignmentVizWidget;
 class TrainDialog;
@@ -57,6 +57,7 @@ public:
      * @see- <TableDockWidget::exportJson>
      */
     vector<PeakGroup> vallgroups;
+    QList<PeakGroup>allgroups;
 
     QMap<QAction*,int> mergeAction;
     //QAction *hell;
@@ -246,8 +247,7 @@ private:
     void markv_0_1_5mzroll(QString fileName);
 	  void setupFiltersDialog();
 
-          QList<PeakGroup>allgroups;
-
+    TableDockWidgetBackend *tableDockWidgetBackend;
           TrainDialog* traindialog;
           ClusterDialog*       clusterDialog;
           QDialog* 	 filtersDialog;
