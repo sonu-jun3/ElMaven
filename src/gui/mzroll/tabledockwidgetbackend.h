@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class TableDockWidgetBackend{
+class TableDockWidgetBackend:QObject{
     Q_OBJECT
 public:
     TableDockWidgetBackend();
