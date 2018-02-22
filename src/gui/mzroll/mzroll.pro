@@ -138,7 +138,8 @@ HEADERS +=  stable.h \
                     awsbucketcredentialsdialog.h \
                     alignmentpolyvizdockwidget.h \
                     controller.h \
-                    numeric_treewidgetitem.h
+                    numeric_treewidgetitem.h \
+                    tabledockwidgetbackend.h
 
 
 
@@ -201,7 +202,8 @@ database.cpp \
     awsbucketcredentialsdialog.cpp \
     alignmentpolyvizdockwidget.cpp \
     controller.cpp \
-    numeric_treewidgetitem.cpp
+    numeric_treewidgetitem.cpp \
+    tabledockwidgetbackend.cpp
 
 contains (DEFINES,EMBEDHTTPSERVER) {
     SOURCES += remotespectrahandler.cpp
