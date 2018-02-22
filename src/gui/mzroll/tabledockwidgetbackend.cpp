@@ -43,7 +43,6 @@ QString TableDockWidgetBackend::groupsStatus(const QList<PeakGroup>&allgroups){
     int goodCount=0;
     int badCount=0;
     for(int i=0; i < allgroups.size(); i++ ) {
-        char groupLabel = allgroups[i].label;
         if (allgroups[i].label == 'g' )
             goodCount++;
         if ( allgroups[i].label == 'b' )
