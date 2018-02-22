@@ -1270,26 +1270,8 @@ void TableDockWidget::keyPressEvent(QKeyEvent *e ) {
 }
 
 void TableDockWidget::updateStatus() {
-
-    int totalCount=0;
-    int goodCount=0;
-    int badCount=0;
-    int ignoredCount=0;
-    int predictedGood=0;
-    for(int i=0; i < allgroups.size(); i++ ) {
-        char groupLabel = allgroups[i].label;
-        if (groupLabel == 'g' ) {
-            goodCount++;
-        } else if ( groupLabel == 'b' ) {
-            badCount++;
-        }
-        totalCount++;
-    }
-    QString title = tr("Group Validation Status: Good=%2 Bad=%3 Total=%1").arg(
-            QString::number(totalCount),
-            QString::number(goodCount),
-            QString::number(badCount));
-    _mainwindow->setStatusText(title);
+    QString status=tableDockWidgetBackend->groupsStatus(allgroups);
+    _mainwindow->setStatusText(status);
 }
 
 float TableDockWidget::showAccuracy(vector<PeakGroup*>&groups) {
