@@ -16,6 +16,9 @@ win32 {
     message("using win32 config")
     DEFINES += MINGW
     DEFINES += WIN32
+    DEFINES += CDFPARSER
+    DEFINES += ZLIB
+    LIBS += -lcdfread -lnetcdf -lz
 }
 
 unix: {
@@ -60,7 +63,7 @@ mac {
     DEFINES += CDFPARSER
     DEFINES += ZLIB
     DEFINES += unix
-    LIBS += -lcdfread -lnetcdf -lz 
+    LIBS += -lcdfread -lnetcdf -lz
     DEFINES += MAC
 }
 
