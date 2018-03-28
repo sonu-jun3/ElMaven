@@ -306,7 +306,7 @@ void SettingsForm::updateMultiprocessing() {
 }
 
 void SettingsForm::recomputeEIC() {
-    LOGD; 
+     
     getFormValues();
 
     PeakGroup* previousGroup = mainwindow->getEicWidget()->getParameters()->getSelectedGroup();
@@ -370,7 +370,7 @@ void SettingsForm::updateSettingFormGUI() {
 
 
 void SettingsForm::getFormValues() {
-    LOGD;
+    
     if (settings == NULL) return;
     //qDebug() << "SettingsForm::getFormValues() ";
 
