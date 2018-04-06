@@ -72,7 +72,8 @@ FORMS = forms/settingsform.ui  \
         forms/spectramatching.ui\
         forms/peptidefragmentation.ui \
     forms/awsbucketcredentialsdialog.ui \
-    forms/alignmentpolyvizdockwidget.ui
+    forms/alignmentpolyvizdockwidget.ui \
+    forms/requestdemo.ui
 
 HEADERS +=  stable.h \
             globals.h \
