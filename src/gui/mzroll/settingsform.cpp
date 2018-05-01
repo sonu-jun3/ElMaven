@@ -4,6 +4,7 @@
 #include <QString>
 #include <QProgressBar>
 #include <QProgressDialog>
+#include <string>
 
 OptionsDialogSettings::OptionsDialogSettings(SettingsForm* dialog): sf(dialog)
 {
@@ -376,6 +377,12 @@ void SettingsForm::itHasFinished(int exitCode, QProcess::ExitStatus exitStatus)
     }
 }
 
+void SettingsForm::msconvertProcessreadyReadStandardOutput()
+{
+    qDebug() << "In on_process_readyReadStandardOutput" << '\n';
+    // qDebug() << qobject_cast<QProcess *>(sender())->readAllStandardOutput();
+    msconvertOutputLogs->setText(qobject_cast<QProcess *>(sender())->readAllStandardOutput());
+}
 
 void SettingsForm::startMsconvert() {
     qDebug() << "IN startMsconvert " << '\n' ;
@@ -393,36 +400,12 @@ void SettingsForm::startMsconvert() {
 
     QProcess *process = new QProcess();
     connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(itHasFinished(int, QProcess::ExitStatus)));
-    // connect(process, SIGNAL(error(QProcess::ProcessError)), process, SLOT(itHasError(QProcess::ProcessError)));
+    connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(msconvertProcessreadyReadStandardOutput()));
     msconvertProgressBar->setMaximum(0);
     msconvertProgressBar->setMinimum(0);
     msconvertStatus->setText("Running...");
 
     process->start("docker run -v " + msconvert_file_path->text() + ":/data -e RAW_FILE_TYPE="+msconvert_input_type->currentText() +" -e OUTPUT_FILE_TYPE="+ msconvert_output_file_type->currentText()+ " kushalgupta/msconvert:0.2");
-    // process->start("docker run -v /home/kushal/Desktop/Elucidata_Projects/elmaven-msconvert-docker/data:/data -e RAW_FILE_TYPE=D -e OUTPUT_FILE_TYPE=mzML kushal/pwiz_raw:0.7");
-    // process->waitForFinished();
-    // QString strOut = process->readAllStandardOutput();
-    
-    // qDebug() << strOut;
-    // usleep(1000);
-    // QString output(process->readAllStandardOutput());
-    // qDebug()<<output;
- 
-    // QString err(process->readAllStandardError());
-    // qDebug()<<err;
-
-    // if(!err.isEmpty()) {
-    //     qDebug() << "Error : " << err << '\n';
-    //     msconvertProgressBar->setValue(0);
-    //     msconvertProgressBar->reset();
-    //     return;
-    // }
-    // else {
-    //     msconvertProgressBar->setMaximum(100);
-    //     msconvertProgressBar->setValue(100);
-    //     return;
-    // }
-
 
 }
 

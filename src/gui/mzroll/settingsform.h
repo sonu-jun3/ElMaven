@@ -38,6 +38,7 @@ class SettingsForm : public QDialog, public Ui_SettingsForm
             void startMsconvert();
             void applyRegularExpScript();
             void itHasFinished(int exitCode, QProcess::ExitStatus exitStatus);
+            void msconvertProcessreadyReadStandardOutput();
 
             /*
             * [Enable/disable deltaRtWeight slider and display appropriate group rank formula in UI]
