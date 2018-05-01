@@ -1,9 +1,4 @@
 #include "settingsform.h"
-#include <QProcess>
-#include <QDir>
-#include <QString>
-#include <QProgressBar>
-#include <QProgressDialog>
 
 OptionsDialogSettings::OptionsDialogSettings(SettingsForm* dialog): sf(dialog)
 {
