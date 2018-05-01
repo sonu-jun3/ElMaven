@@ -4,7 +4,6 @@
 #include <QString>
 #include <QProgressBar>
 #include <QProgressDialog>
-#include <string>
 
 OptionsDialogSettings::OptionsDialogSettings(SettingsForm* dialog): sf(dialog)
 {
