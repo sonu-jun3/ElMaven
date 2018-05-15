@@ -345,7 +345,7 @@ QString PollyElmavenInterfaceDialog::uploadDataToPolly()
     bool status = qdir.removeRecursively();
     QCoreApplication::processEvents();
     if (!patch_ids.isEmpty()){
-        QString redirection_url = QString("<a href='https://polly.elucidata.io/main#project=%1&auto-redirect=firstview'>Go To Polly</a>").arg(upload_project_id);
+        QString redirection_url = QString("<a href='http://testpolly.elucidata.io/main#project=%1&auto-redirect=firstview'>Go To Polly</a>").arg(upload_project_id);
         qDebug()<<"redirection_url     - "<<redirection_url;
         label_upload_status->setText(redirection_url);
         label_upload_status->setTextFormat(Qt::RichText);
