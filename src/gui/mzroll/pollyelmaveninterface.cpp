@@ -400,7 +400,7 @@ QStringList PollyElmavenInterfaceDialog::prepareFilesToUpload(QDir qdir){
     }
 
     if (comboBox_compound_db->isEnabled()){
-        mainwindow->ligandWidget->saveCompoundListToPolly(writable_temp_dir+QDir::separator()+datetimestamp+"_Compound_DB_"+user_compound_DB_name,compound_db);
+        mainwindow->ligandWidget->saveCompoundListToPolly(writable_temp_dir+QDir::separator()+datetimestamp+"_Compound_DB_Elmaven_"+user_compound_DB_name,compound_db);
     }    
 
     if (export_option=="Export Selected"){
