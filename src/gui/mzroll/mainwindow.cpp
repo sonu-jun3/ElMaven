@@ -418,6 +418,9 @@ using namespace mzUtils;
 	// pollyelmavengui dialog
 	pollyElmavenInterfaceDialog = new PollyElmavenInterfaceDialog(this);
 
+	// mscovert dialog
+	msConvertForm = new MsConvertForm(this, msConvertForm);
+
 	//alignment dialog
 	alignmentDialog = new AlignmentDialog(this);
 	alignmentDialog->setMainWindow(this);
@@ -2451,6 +2454,12 @@ void MainWindow::createToolBars() {
 	btnSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 	btnSettings->setToolTip(tr("Change Global Options"));
 
+	QToolButton *btnMsconvert = new QToolButton(toolBar);
+	btnMsconvert->setText("Msconvert");
+	btnMsconvert->setIcon(QIcon(rsrcPath + "/msconvert.png"));
+	btnMsconvert->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	btnMsconvert->setToolTip(tr("open msconvert"));
+
 	connect(btnOpen, SIGNAL(clicked()), SLOT(open()));
 	connect(btnAlign, SIGNAL(clicked()), alignmentDialog, SLOT(show()));
 	// connect(btnAlign, SIGNAL(clicked()), alignmentDialog, SLOT(intialSetup()));
@@ -2458,6 +2467,9 @@ void MainWindow::createToolBars() {
 	connect(btnFeatureDetect, SIGNAL(clicked()), SLOT(showPeakdetectionDialog()));
 	connect(btnPollyBridge, SIGNAL(clicked()), SLOT(showPollyElmavenInterfaceDialog()));
 	connect(btnSettings, SIGNAL(clicked()), SLOT(showsettingsForm()));
+
+	connect(btnMsconvert, SIGNAL(clicked()), SLOT(showMsconvertForm()));
+	
 	connect(btnSpectraMatching, SIGNAL(clicked()), SLOT(showspectraMatchingForm()));
 
 	toolBar->addWidget(btnOpen);
@@ -2467,6 +2479,7 @@ void MainWindow::createToolBars() {
 	toolBar->addWidget(btnPollyBridge);
 	toolBar->addWidget(btnSpectraMatching);
 	toolBar->addWidget(btnSettings);
+	toolBar->addWidget(btnMsconvert);
 
 	QWidget *hBox = new QWidget(toolBar);
 	(void) toolBar->addWidget(hBox);
@@ -2663,6 +2676,10 @@ void MainWindow::showsettingsForm() {
 
 	settingsForm->setInitialGroupRank();
 	settingsForm->exec();
+}
+
+void MainWindow::showMsconvertForm() {
+	msConvertForm->show();
 }
 
 void MainWindow::historyLast() {
