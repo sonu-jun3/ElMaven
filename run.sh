@@ -27,3 +27,12 @@ if [ $systemType == "linux" ] && [ $flag == 10 ]; then
     genhtml ../coverage.info --output-directory ../coverage
 fi
 
+if [ -x "$(command -v docker)" ]; then
+    echo "Update docker and pull kushalgupta/msconvertgui:0.1"
+    docker pull kushalgupta/msconvertgui:0.1
+    # command
+else
+    echo "Install docker"
+    # command
+fi
+

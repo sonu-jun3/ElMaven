@@ -24,6 +24,7 @@
 #include "alignmentpolyvizdockwidget.h"
 #include "peakdetectiondialog.h"
 #include "pollyelmaveninterface.h"
+#include "msconvertform.h"
 #include "alignmentdialog.h"
 #include "awsbucketcredentialsdialog.h"
 //#include "rconsoledialog.h"
@@ -58,6 +59,7 @@ class PlotDockWidget;
 class BackgroundPeakUpdate;
 class PeakDetectionDialog;
 class PollyElmavenInterfaceDialog;
+class MsConvertForm;
 class AwsBucketCredentialsDialog;
 class AlignmentDialog;
 //class RConsoleDialog;
@@ -192,6 +194,7 @@ public:
 	SettingsForm *settingsForm;
 	PeakDetectionDialog *peakDetectionDialog;
 	PollyElmavenInterfaceDialog *pollyElmavenInterfaceDialog;
+	MsConvertForm *msConvertForm;
 	AwsBucketCredentialsDialog *awsBucketCredentialsDialog;
 	AlignmentDialog* alignmentDialog;
 	// RconsoleWidget* rconsoleDockWidget;
@@ -327,6 +330,7 @@ public Q_SLOTS:
         void showPeakdetectionDialog();  // TODO: Sahil - Kiran, Added while
                                          // merging mainwindow
 		void showPollyElmavenInterfaceDialog();
+		void showMsconvertForm();
 	void setUrl(QString url, QString link = QString::null);
 	void setUrl(Compound*);
 	void setUrl(Reaction*);

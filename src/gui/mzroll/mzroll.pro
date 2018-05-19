@@ -90,6 +90,7 @@ FORMS = forms/settingsform.ui  \
         forms/isotopeswidget.ui \
         forms/peakdetectiondialog.ui \
         forms/pollyelmaveninterface.ui \
+        forms/msconvertform.ui \
         forms/comparesamplesdialog.ui \
         forms/trainingdialog.ui \
         forms/alignmentdialog.ui \
@@ -132,6 +133,7 @@ HEADERS +=  stable.h \
                     eicwidget.h \
                     peakdetectiondialog.h \
                     pollyelmaveninterface.h \
+                    msconvertform.h \
                     comparesamplesdialog.h \
                     traindialog.h \
                     tabledockwidget.h  \
@@ -201,6 +203,7 @@ database.cpp \
  tabledockwidget.cpp \
  peakdetectiondialog.cpp \
  pollyelmaveninterface.cpp \
+ msconvertform.cpp \
  comparesamplesdialog.cpp \
  traindialog.cpp \
  line.cpp  \
