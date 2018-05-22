@@ -62,7 +62,7 @@ class MsConvertForm : public QDialog, public Ui_MsConvertForm
 		void cancel();
 
                 inline void selectMsconvertInputPath() { selectMsconvertInputFolder("msconvertFolderPath"); }
-                
+                void itHasFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
         private:
                 /**
