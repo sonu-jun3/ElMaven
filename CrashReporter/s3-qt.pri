@@ -1,5 +1,5 @@
 INCLUDEPATH += $$PWD/include
-QMAKE_CXXFLAGS += -Ofast -ffast-math  -std=c++11
+QMAKE_CXXFLAGS +=   -std=c++11
 QT += network
 
 HEADERS += \
