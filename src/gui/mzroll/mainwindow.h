@@ -401,7 +401,7 @@ private Q_SLOTS:
 	void checkSRMList();
 	void readSettings();
 	void writeSettings();
-	void toggleIsotopicBarPlot();
+	void toggleIsotopicBarPlot(bool show);
 	inline void slotReboot() {
  		qDebug() << "Performing application reboot...";
 		QString rep = QDir::cleanPath(QCoreApplication::applicationFilePath());
