@@ -420,6 +420,9 @@ using namespace mzUtils;
 	peakDetectionDialog->setMainWindow(this);
 	peakDetectionDialog->setSettings(settings);
 
+	// pollyelmavengui dialog
+	pollyElmavenInterfaceDialog = new PollyElmavenInterfaceDialog(this);
+
 	//alignment dialog
 	alignmentDialog = new AlignmentDialog(this);
 	alignmentDialog->setMainWindow(this);
@@ -2341,6 +2344,34 @@ void MainWindow::saveSettings()
 
 }
 
+
+void MainWindow::loadPollySettings(QString fileName)
+{
+    bool fileLoaded = false;
+    QFile file(fileName);
+
+    if(file.open(QIODevice::ReadOnly)) {
+
+        QByteArray bArr = file.readAll();
+        file.close();
+
+        if(mavenParameters->loadSettings(bArr.data()))
+            fileLoaded = true;
+
+    }
+
+    if(fileLoaded)
+        emit loadedSettings();
+
+    else {
+        // display an error message
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Error");
+        msgBox.setText("Loading the file failed");
+        msgBox.exec();
+    }
+}
+
 void MainWindow::loadSettings()
 {
     bool fileLoaded = false;
@@ -2405,6 +2436,12 @@ void MainWindow::createToolBars() {
 	btnFeatureDetect->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 	btnFeatureDetect->setToolTip(tr("Feature Detection"));
 
+	QToolButton *btnPollyBridge = new QToolButton(toolBar);
+	btnPollyBridge->setText("Polly");
+	btnPollyBridge->setIcon(QIcon(rsrcPath + "/POLLY.png"));
+	btnPollyBridge->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	btnPollyBridge->setToolTip(tr("Polly: Our tool to visualize and analyze massspec data"));
+
 	QToolButton *btnSpectraMatching = new QToolButton(toolBar);
 	btnSpectraMatching->setText("Match");
 	btnSpectraMatching->setIcon(QIcon(rsrcPath + "/spectra_search.png"));
@@ -2423,6 +2460,7 @@ void MainWindow::createToolBars() {
 	// connect(btnAlign, SIGNAL(clicked()), alignmentDialog, SLOT(intialSetup()));
 	//connect(btnDbSearch, SIGNAL(clicked()), SLOT(showPeakdetectionDialog())); //TODO: Sahil-Kiran, Removed while merging mainwindow
 	connect(btnFeatureDetect, SIGNAL(clicked()), SLOT(showPeakdetectionDialog()));
+	connect(btnPollyBridge, SIGNAL(clicked()), SLOT(showPollyElmavenInterfaceDialog()));
 	connect(btnSettings, SIGNAL(clicked()), SLOT(showsettingsForm()));
 	connect(btnSpectraMatching, SIGNAL(clicked()), SLOT(showspectraMatchingForm()));
 
@@ -2430,6 +2468,7 @@ void MainWindow::createToolBars() {
 	toolBar->addWidget(btnAlign);
 	//toolBar->addWidget(btnDbSearch); //TODO: Sahil-Kiran, Removed while merging mainwindow
 	toolBar->addWidget(btnFeatureDetect);
+	toolBar->addWidget(btnPollyBridge);
 	toolBar->addWidget(btnSpectraMatching);
 	toolBar->addWidget(btnSettings);
 
@@ -2663,6 +2702,10 @@ bool MainWindow::addSample(mzSample* sample) {
 void MainWindow::showPeakdetectionDialog() {
 	LOGD;
     peakDetectionDialog->show();      
+}
+
+void MainWindow::showPollyElmavenInterfaceDialog() {
+	pollyElmavenInterfaceDialog->initialSetup();
 }
 
 void MainWindow::showSRMList() {

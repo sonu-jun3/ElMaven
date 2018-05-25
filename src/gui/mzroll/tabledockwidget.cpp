@@ -805,6 +805,95 @@ void TableDockWidget::exportGroupsToSpreadsheet() {
     }
 }
 
+void TableDockWidget::prepareDataForPolly(QString writable_temp_dir,QString export_format,QString user_filename) {
+
+    vector<mzSample*> samples = _mainwindow->getSamples();
+    CSVReports* csvreports = new CSVReports(samples);
+    csvreports->setMavenParameters(_mainwindow->mavenParameters);
+    if (allgroups.size() == 0 ) {
+        QString msg = "Peaks Table is Empty";
+        QMessageBox::warning(this, tr("Error"), msg);
+        return;
+    }
+
+    // QString dir = writable_temp_dir;
+    // QSettings* settings = _mainwindow->getSettings();
+
+    // if ( settings->contains("lastDir") ) dir = settings->value("lastDir").value<QString>();
+
+    QString groupsSTAB = "Groups Summary Matrix Format With Set Names (*.tab)";
+    QString groupsTAB = "Groups Summary Matrix Format (*.tab)";    
+    QString peaksTAB =  "Peaks Detailed Format (*.tab)";
+    QString groupsSCSV = "Groups Summary Matrix Format Comma Delimited With Set Names (*.csv)";
+    QString groupsCSV = "Groups Summary Matrix Format Comma Delimited (*.csv)";
+    QString peaksCSV =  "Peaks Detailed Format Comma Delimited (*.csv)";
+    
+    QString peaksListQE= "Inclusion List QE (*.csv)";
+    QString mascotMGF=   "Mascot Format MS2 Scans (*.mgf)";
+
+    QString sFilterSel = export_format;
+    // QString fileName = QFileDialog::getSaveFileName(this, 
+    //         tr("Export Groups"), dir, 
+    //         groupsCSV + ";;" + groupsSCSV + ";;" + groupsTAB + ";;" + groupsSTAB + ";;" + peaksCSV + ";;" + peaksTAB + ";;" + peaksListQE + ";;" + mascotMGF,
+    //         &sFilterSel);
+    QString fileName = writable_temp_dir+QDir::separator()+user_filename;
+    if(fileName.isEmpty()) return;
+
+    if ( sFilterSel == groupsSCSV || sFilterSel == peaksCSV || sFilterSel == groupsCSV) {
+        if(!fileName.endsWith(".csv",Qt::CaseInsensitive)) fileName = fileName + ".csv";
+    }
+    
+    if ( sFilterSel == groupsSTAB || sFilterSel == peaksTAB || sFilterSel == groupsTAB) {
+        if(!fileName.endsWith(".tab",Qt::CaseInsensitive)) fileName = fileName + ".tab";
+    }
+    
+    if ( samples.size() == 0) return;
+
+    
+	if (sFilterSel == peaksListQE ) { 
+		writeQEInclusionList(fileName); 
+		return;
+    } else if (sFilterSel == mascotMGF ) {
+        writeMascotGeneric(fileName);
+        return;
+    }
+
+   
+    csvreports->setUserQuantType( _mainwindow->getUserQuantType() );
+
+    bool includeSetNamesLines=true;
+
+    if (sFilterSel == groupsSCSV) {
+        csvreports->openGroupReport(fileName.toStdString(),includeSetNamesLines);
+    } else if (sFilterSel == groupsSTAB )  {
+        csvreports->openGroupReport(fileName.toStdString(),includeSetNamesLines);
+    } else if (sFilterSel == peaksCSV )  {
+        csvreports->openPeakReport(fileName.toStdString());
+    } else if (sFilterSel == peaksTAB )  {
+        csvreports->openPeakReport(fileName.toStdString());
+    } else { 	//default to group summary
+        csvreports->openGroupReport(fileName.toStdString(),false);
+    }
+
+    QList<PeakGroup*> selectedGroups = getSelectedGroups();
+    csvreports->setSelectionFlag(static_cast<int>(peakTableSelection));
+
+    for(int i=0; i<allgroups.size(); i++ ) {
+        if (selectedGroups.contains(&allgroups[i])) {
+            PeakGroup& group = allgroups[i];
+            csvreports->addGroup(&group);
+        }
+    }
+    csvreports->closeFiles();
+
+    if (csvreports->getErrorReport() != "") {
+        QMessageBox msgBox(_mainwindow);
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setText(csvreports->getErrorReport());
+        msgBox.exec();
+    }
+}
+
 void TableDockWidget::exportJson() {
     LOGD;
     if (allgroups.size() == 0 ) {
