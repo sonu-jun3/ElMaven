@@ -125,7 +125,7 @@ void PollyElmavenInterfaceDialog::initialSetup()
     }
     else{
         // call_initial_EPI_form();
-        startup_data_load()
+        startup_data_load();
         return;
     }
 }
