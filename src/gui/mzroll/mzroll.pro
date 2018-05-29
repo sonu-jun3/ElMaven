@@ -101,7 +101,8 @@ FORMS = forms/settingsform.ui  \
         forms/spectramatching.ui\
         forms/peptidefragmentation.ui \
     forms/awsbucketcredentialsdialog.ui \
-    forms/alignmentpolyvizdockwidget.ui
+    forms/alignmentpolyvizdockwidget.ui \
+    forms/uploadtrainingdatadialog.ui
 
 HEADERS +=  stable.h \
             globals.h \
@@ -168,7 +169,8 @@ HEADERS +=  stable.h \
                     alignmentpolyvizdockwidget.h \
                     controller.h \
                     numeric_treewidgetitem.h \
-                    ElmavCrashHandler.h
+                    ElmavCrashHandler.h \
+    		uploadtrainingdatadialog.h
 
 
 
@@ -234,7 +236,8 @@ database.cpp \
     alignmentpolyvizdockwidget.cpp \
     controller.cpp \
     numeric_treewidgetitem.cpp \
-    ElmavCrashHandler.cpp
+    ElmavCrashHandler.cpp \
+    uploadtrainingdatadialog.cpp
 
 macx{
     SOURCES -= ElmavCrashHandler.cpp
