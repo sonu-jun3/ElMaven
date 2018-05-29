@@ -51,6 +51,9 @@
 #include <csignal>
 #include <QList>
 #include <QRegExp>
+#include <QMessageBox>
+#include <QStandardPaths>
+//#include "uploadData.h"
 
 class SettingsForm;
 class EicWidget;
@@ -147,7 +150,7 @@ public:
 
 	SRMList *srmList;
     map<string, Compound*> annotation;
-	
+
 	PathwayWidget *pathwayWidget;
 	SpectraWidget *spectraWidget;
 	AlignmentVizWidget *alignmentVizWidget;
@@ -236,6 +239,8 @@ public:
 	void isotopeC13Correct(MatrixXf& MM, int numberofCarbons, map<unsigned int, string> carbonIsotopeSpecies);
 	void autoSaveSignal();
 	void normalizeIsotopicMatrix(MatrixXf &MM);
+
+	void uploadTrainingData();
 
 	void savePeaksTable(TableDockWidget* peaksTable, QString fileName, QString tableName);
 

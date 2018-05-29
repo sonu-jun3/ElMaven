@@ -106,11 +106,11 @@ class TableDockWidget : public QDockWidget
     float extractMaxIntensity(PeakGroup *group);
     float outputRtWindow = 2.0;
 
-public Q_SLOTS: 
+public Q_SLOTS:
 	  //void showInfo(PeakGroup* group);
 
       /**
-       * @brief update the color of compounds in ligand widget which are 
+       * @brief update the color of compounds in ligand widget which are
        * present in the tabledockwidget
        */
     void updateCompoundWidget();
@@ -250,7 +250,7 @@ public Q_SLOTS:
     void contextMenuEvent(QContextMenuEvent *event);
 
 private:
-    QPalette pal;    
+    QPalette pal;
     void showSameGroup(QPair<int, int> sameMzRtGroupIndexHash);
     void deletePeaks();
     void addRow(PeakGroup *group, QTreeWidgetItem *root);

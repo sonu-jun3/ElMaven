@@ -8,6 +8,8 @@ uploadTrainingDataDialog::uploadTrainingDataDialog(QWidget *parent) :
     ui(new Ui::uploadTrainingDataDialog)
 {
     ui->setupUi(this);
+
+    ui->progressBar->setValue(0);
 }
 
 uploadTrainingDataDialog::~uploadTrainingDataDialog()

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QStandardPaths>
+
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -200,7 +201,7 @@ using namespace mzUtils;
 	QString dataDir = ".";
 	unloadableFiles.reserve(50);
 
-	
+
 	QList<QString> dirs;
 	dirs << dataDir << QApplication::applicationDirPath()
 		 << QApplication::applicationDirPath() + "/../Resources/";
@@ -309,7 +310,7 @@ using namespace mzUtils;
 	customPlot = new QCustomPlot(this);
 	alignmentVizPlot = new QCustomPlot(this);
 	alignmentPolyVizPlot = new QCustomPlot(this);
-	alignmentVizAllGroupsPlot = new QCustomPlot(this);	
+	alignmentVizAllGroupsPlot = new QCustomPlot(this);
 	pathwayWidget = new PathwayWidget(this);
 	adductWidget = new AdductWidget(this);
 	isotopeWidget = new IsotopeWidget(this);
@@ -346,13 +347,13 @@ using namespace mzUtils;
 	// rconsoleDockWidget = new RconsoleWidget(this);
 	spectralHitsDockWidget = new SpectralHitsDockWidget(this, "Spectral Hits");
 	peptideFragmentation = new PeptideFragmentationWidget(this);
-	
+
 	setIsotopicPlotStyling();
 
 	// prepare x axis:
 	alignmentVizPlot->xAxis->setTicks(false);
 	alignmentVizPlot->xAxis->setBasePen(QPen(Qt::white));
-	alignmentVizPlot->xAxis->grid()->setVisible(false);	
+	alignmentVizPlot->xAxis->grid()->setVisible(false);
 	// prepare y axis:
 	alignmentVizPlot->yAxis->setTicks(false);
 	alignmentVizPlot->yAxis->setBasePen(QPen(Qt::white));
@@ -361,7 +362,7 @@ using namespace mzUtils;
  	// prepare x axis:
 	alignmentPolyVizPlot->xAxis->setTicks(false);
 	alignmentPolyVizPlot->xAxis->setBasePen(QPen(Qt::white));
-	alignmentPolyVizPlot->xAxis->grid()->setVisible(false);	
+	alignmentPolyVizPlot->xAxis->grid()->setVisible(false);
 	// prepare y axis:
 	alignmentPolyVizPlot->yAxis->setTicks(false);
 	alignmentPolyVizPlot->yAxis->setBasePen(QPen(Qt::white));
@@ -371,7 +372,7 @@ using namespace mzUtils;
 	// prepare x axis:
 	alignmentVizAllGroupsPlot->xAxis->setTicks(false);
 	alignmentVizAllGroupsPlot->xAxis->setBasePen(QPen(Qt::white));
-	alignmentVizAllGroupsPlot->xAxis->grid()->setVisible(false);	
+	alignmentVizAllGroupsPlot->xAxis->grid()->setVisible(false);
 	// prepare y axis:
 	alignmentVizAllGroupsPlot->yAxis->setTicks(false);
 	alignmentVizAllGroupsPlot->yAxis->setBasePen(QPen(Qt::white));
@@ -414,7 +415,7 @@ using namespace mzUtils;
 	peakDetectionDialog = new PeakDetectionDialog(this);
 	peakDetectionDialog->setMainWindow(this);
 	peakDetectionDialog->setSettings(settings);
-	
+
 	// pollyelmavengui dialog
 	pollyElmavenInterfaceDialog = new PollyElmavenInterfaceDialog(this);
 
@@ -529,7 +530,7 @@ using namespace mzUtils;
     spectraDockWidget->raise();
 	alignmentVizDockWidget->raise();
 	alignmentPolyVizDockWidget->raise();
-	alignmentVizAllGroupsDockWidget->raise();	
+	alignmentVizAllGroupsDockWidget->raise();
 
 	createToolBars();
 	// setIonsizationMode(0);
@@ -561,7 +562,7 @@ using namespace mzUtils;
 	if (pathwayWidget)
 		loadPathwaysFolder(pathwaysFolder);
 
-	setCentralWidget(eicWidgetController());	
+	setCentralWidget(eicWidgetController());
 
 	if (ligandWidget) {
 		if (settings->contains("lastDatabaseFile")) {
@@ -665,7 +666,7 @@ MainWindow::~MainWindow()
 void MainWindow::saveSettingsToLog() {
 
     QString buffer;
-    QTextStream summary( &buffer, QIODevice::ReadWrite);	
+    QTextStream summary( &buffer, QIODevice::ReadWrite);
 
     summary << "\n\n-------------------Maven Parameters-------------------"<< "\n"<< "\n";
 //     summary << "runFunction =" << runFunction<< "\n";
@@ -765,7 +766,7 @@ void MainWindow::saveSettingsToLog() {
 }
 
 
-void MainWindow::createPeakTable(QString filenameNew) {	
+void MainWindow::createPeakTable(QString filenameNew) {
 	TableDockWidget * peaksTable = this->addPeaksTable("title");
 	peaksTable->loadPeakTable(filenameNew);
 	peaksTable->showAllGroups();
@@ -810,7 +811,7 @@ void MainWindow::checkSRMList() {
 	for(map<string,set<string>>::iterator iit = srmSampleMap.begin(); iit != srmSampleMap.end(); ++iit) {
 		if (srmSampleMap[iit->first].size() !=  sampleSet.size()) {
 			set<string> diff;
-			set_difference(sampleSet.begin(), sampleSet.end(), srmSampleMap[iit->first].begin(), srmSampleMap[iit->first].end(), 
+			set_difference(sampleSet.begin(), sampleSet.end(), srmSampleMap[iit->first].begin(), srmSampleMap[iit->first].end(),
                          std::inserter(diff, diff.begin()));
 			//Inserting the diff of set of the sample that is not present for the given SRM ID
 			for (auto i : diff) srmListError[iit->first].insert(i);
@@ -821,10 +822,10 @@ void MainWindow::checkSRMList() {
 		string filesNames = "Following are the list of the sample(s) for which segments are missing: ";
 		for(map<string,set<string>>::iterator iit = srmListError.begin(); iit != srmListError.end(); ++iit) {
 			filesNames += "\n" + iit->first + " : " + "\n";
-			
+
 			for(auto f : srmListError[iit->first]) {
 				filesNames += "    " + f + "\n";
-			}    
+			}
 		}
 		QMessageBoxResize* msgBox = new QMessageBoxResize( this );
 		msgBox->setAttribute( Qt::WA_DeleteOnClose );
@@ -904,7 +905,7 @@ void MainWindow::saveMzRoll() {
 	if (this->peaksMarked > 5) {
 			this->saveMzRollAllTables();
 	} else if (this->allPeaksMarked) {
-			this->saveMzRollAllTables();	
+			this->saveMzRollAllTables();
 	} else if (settings->value("closeEvent").toInt() == 1) {
 		this->saveMzRollAllTables();
 	} else if(this->doAutosave) {
@@ -990,14 +991,14 @@ void MainWindow::setIsotopicPlotStyling() {
 	customPlot->xAxis->setTickLabels( false );
 	customPlot->xAxis->setTicks( false );
 	customPlot->xAxis->setBasePen(QPen(Qt::white));
-	customPlot->xAxis->grid()->setVisible(false);	
+	customPlot->xAxis->grid()->setVisible(false);
 	// prepare y axis:
 	customPlot->yAxis->grid()->setVisible(false);
 	customPlot->yAxis->setTickLabels( false );
 	customPlot->yAxis->setTicks( false );
 	customPlot->yAxis->setBasePen(QPen(Qt::white));
 	customPlot->yAxis->setRange(0, 1);
-	
+
 }
 
 void MainWindow::mzrollLoadDB(QString dbname) {
@@ -1141,7 +1142,7 @@ void MainWindow::setIonizationModeLabel() {
 		if(mode==1) polarityLabel="+1";
 		ionMode=ionMode+"("+polarityLabel+")";
 	}
-	
+
 	ionizationModeLabel->setText(ionMode);
 
 	massCalcWidget->setCharge(mode);
@@ -1195,7 +1196,7 @@ void MainWindow::setTotalCharge() {
 
 	ligandWidget->updateTable();
 
-} 
+}
 
 vector<mzSample*> MainWindow::getVisibleSamples() {
 
@@ -1293,7 +1294,7 @@ void MainWindow::setFormulaFocus(QString formula) {
 		string compoundId = compoundName;
 		Compound* c = new Compound(compoundId, compoundName, formula.toStdString(), charge);
 		setCompoundFocus(c);
-	}		
+	}
 }
 
 void MainWindow::setPathwayFocus(Pathway* p) {
@@ -1306,13 +1307,13 @@ void MainWindow::setPathwayFocus(Pathway* p) {
 void MainWindow::setCompoundFocus(Compound*c) {
 	if (c == NULL)
 		return;
-		
+
 	if (!(isotopeWidget->workerThread->stopped() && isotopeWidget->workerThreadBarplot->stopped())) {
 		threadCompound = c;
 		return;
 	}
 
-		
+
  	if (!(isotopeWidget->workerThread->stopped() && isotopeWidget->workerThreadBarplot->stopped())) {
  		threadCompound = c;
  		return;
@@ -1336,7 +1337,7 @@ void MainWindow::setCompoundFocus(Compound*c) {
 	//  pathwayWidget->clear();
 	//    pathwayWidget->setCompound(c);
 	//}
-	
+
 	if (massCalcWidget && massCalcWidget->isVisible()) {
 		massCalcWidget->setMass(mz);
 	}
@@ -1473,7 +1474,7 @@ void MainWindow::setMzValue() {
 			showFragmentationScans(mz1);
 	}
 	suggestPopup->addToHistory(QString::number(mz1, 'f', 5));
-	connect(searchText, SIGNAL(returnPressed()), getEicWidget(), SLOT(resetZoom()));	
+	connect(searchText, SIGNAL(returnPressed()), getEicWidget(), SLOT(resetZoom()));
 }
 
 void MainWindow::setMzValue(float mz1, float mz2) {
@@ -1529,7 +1530,7 @@ void MainWindow::open() {
 							+ tr("Peptide XML(*.pep.xml *.pepXML);;")
 							+ tr("Peptide idpDB(*.idpDB);;")
 							+ tr("All Files(*.*)"));
-							
+
 	if (filelist.size() == 0)
 		return;
 
@@ -1614,7 +1615,7 @@ bool MainWindow::updateSamplePathinMzroll(QStringList filelist) {
 
 						if (reply == QMessageBox::Cancel) {
 							return true;
-						} 
+						}
 
 						path = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                              "/home",
@@ -1653,7 +1654,7 @@ bool MainWindow::loadCompoundsFile(QString filename) {
        // compoundCount=fileLoader->loadPepXML(filename);
     } else if ( filename.endsWith("msp",Qt::CaseInsensitive) || filename.endsWith("sptxt",Qt::CaseInsensitive)) {
         compoundCount=fileLoader->loadNISTLibrary(filename);
-    } else if ( filename.endsWith("massbank",Qt::CaseInsensitive)) { 
+    } else if ( filename.endsWith("massbank",Qt::CaseInsensitive)) {
         compoundCount=fileLoader->loadMassBankLibrary(filename);
     } else {
         compoundCount = DB.loadCompoundCSVFile(dbfilename);
@@ -1804,7 +1805,7 @@ bool MainWindow::loadMetaInformation(QString filename) {
 	int sampleCount = 0;
 
     sampleCount = loadMetaCsvFile(dbfilename);
-    
+
 	if (sampleCount > 0) {
         setStatusText(tr("loadMetaInfo: done after loading %1 meta information").arg(QString::number(sampleCount)));
         Q_EMIT(metaCsvFileLoaded());
@@ -1966,7 +1967,7 @@ int MainWindow::loadMetaCsvFile(string filename){
 			sampleName = sampleName.section('.', 0, -2);
 		}
 		mzSample* sample=getSampleByName(sampleName);
-		if(!sample) continue; 
+		if(!sample) continue;
         sample->_setName = set;
         sample->setInjectionOrder(injectionOrder);
        	loadCount++;
@@ -2117,7 +2118,7 @@ void MainWindow::readSettings() {
 
 	if (!settings->contains("ligandDbFilename"))
 		settings->setValue("ligandDbFilename", QString("ligand.db"));
-			
+
     if (!settings->contains("clsfModelFilename") || settings->value("clsfModelFilename").toString().length() <=0) {
         #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
           settings->setValue("clsfModelFilename",  QApplication::applicationDirPath() + "/" + "default.model");
@@ -2131,7 +2132,7 @@ void MainWindow::readSettings() {
 
 
 
-        
+
     // if (!settings->contains("checkBox"))
     //     settings->setValue("checkBox", 0);
 
@@ -2160,7 +2161,7 @@ void MainWindow::readSettings() {
     if (!settings->contains("mzslice"))
         settings->setValue("mzslice", QRectF(100.0, 100.01, 0, 30));
 
-    //Options tab 
+    //Options tab
 
 	if (!settings->contains("ionChargeBox"))
         settings->setValue("ionChargeBox", 1);
@@ -2214,12 +2215,48 @@ void MainWindow::writeSettings() {
 	qDebug() << "Settings saved to " << settings->fileName();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
-	settings->setValue("closeEvent", 1);
-	this->saveMzRoll();
-	writeSettings();
-	event->accept();
+void MainWindow::uploadTrainingData() {
+	/*
+	if (enableDataShare) {}
+	 */
+	for (size_t i = 0; i < groupTables.size(); i++) {
+		QList<PeakGroup* > allgroups = groupTables[i]->getGroups();
 
+		if (allgroups.size() != 0) {
+			/**
+		     * copy all groups from <allgroups> to <vallgroups> which is used by
+		     * < libmaven/jsonReports.cpp>
+		    */
+		    groupTables[i]->vallgroups.clear();
+		    for(int j = 0 ; j < allgroups.size(); j++){
+		        groupTables[i]->vallgroups.push_back(*allgroups[j]);
+		    }
+
+			QString fileName = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+			fileName.append("/elmaven-user-data.json");
+
+			qDebug() << fileName;
+
+			saveJson * jsonSaveThread = new saveJson();
+		    jsonSaveThread->setMainwindow(this);
+		    jsonSaveThread->setPeakTable(groupTables[i]);
+		    jsonSaveThread->setfileName(fileName.toStdString());
+		    jsonSaveThread->start();
+
+			//uploadData jsonUploader(fileName.toStdString());
+		}
+	}
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    event->ignore();
+    if (QMessageBox::Yes == QMessageBox::question(this, "Quit Program", "Do you really want to quit?", QMessageBox::Yes | QMessageBox::No)) {
+		MainWindow::uploadTrainingData();
+        settings->setValue("closeEvent", 1);
+        this->saveMzRoll();
+        writeSettings();
+        event->accept();
+    }
 }
 
 /**
@@ -2299,7 +2336,7 @@ void MainWindow::createMenus() {
 			SLOT(setVisible(bool)));
 
     QAction* aj = widgetsMenu->addAction("MS2 Events");
-    aj->setCheckable(true); 
+    aj->setCheckable(true);
 	aj->setChecked(false);
     connect(aj,SIGNAL(toggled(bool)),fragPanel,SLOT(setVisible(bool)));
 
@@ -2506,12 +2543,12 @@ void MainWindow::createToolBars() {
 
     searchText = new QLineEdit(hBox);
     searchText->setMinimumWidth(100);
-    searchText->setPlaceholderText("MW / Compound");   
+    searchText->setPlaceholderText("MW / Compound");
     searchText->setToolTip("<b>Text Search</b> <br> Compound Names: <b>ATP</b> <br> MRM: <b>precursorMz-productMz</b> <br> Patterns: <b>[45]-phosphate</b> <br>Formulas: <b> C6H10* </b>");
     searchText->setObjectName(QString::fromUtf8("searchText"));
     searchText->setShortcutEnabled(true);
-    connect(searchText,SIGNAL(textEdited(QString)),this,SLOT(doSearch(QString))); 
-	connect(searchText,SIGNAL(returnPressed()), SLOT(setMzValue()));	
+    connect(searchText,SIGNAL(textEdited(QString)),this,SLOT(doSearch(QString)));
+	connect(searchText,SIGNAL(returnPressed()), SLOT(setMzValue()));
 
 	QShortcut* ctrlK = new QShortcut(QKeySequence(tr("Ctrl+K", "Do Search")),
 			this);
@@ -2544,7 +2581,7 @@ void MainWindow::createToolBars() {
 	ionizationModeLabel->setFrameShape(QFrame::Panel);
 	ionizationModeLabel->setFrameShadow(QFrame::Raised);
 
-	
+
 	ionChargeBox = new QSpinBox(hBox);
 	ionChargeBox->setValue(settings->value("ionChargeBox").toInt());
 
@@ -2574,7 +2611,7 @@ void MainWindow::createToolBars() {
 	layout->addWidget(new QLabel("+/-", 0, 0));
 	layout->addWidget(massCutoffWindowBox, 0);
 	layout->addWidget(massCutoffComboBox,0);
-	
+
 	sideBar = new QToolBar(this);
 	sideBar->setObjectName("sideBar");
 
@@ -2686,8 +2723,8 @@ void MainWindow::addToHistory(const mzSlice& slice) {
 bool MainWindow::addSample(mzSample* sample) {
 	if (sample && sample->scans.size() > 0) {
 		samples.push_back(sample);
-		mavenParameters->samples.push_back(sample);	
-		settingsForm->setSettingsIonizationMode("Auto Detect");		
+		mavenParameters->samples.push_back(sample);
+		settingsForm->setSettingsIonizationMode("Auto Detect");
 		return true;
 	} else {
 		delete (sample);
@@ -2697,7 +2734,7 @@ bool MainWindow::addSample(mzSample* sample) {
 
 void MainWindow::showPeakdetectionDialog() {
 
-    peakDetectionDialog->show();      
+    peakDetectionDialog->show();
 }
 
 void MainWindow::showPollyElmavenInterfaceDialog() {
@@ -2789,7 +2826,7 @@ void MainWindow::Align() {
 		connect(workerThread, SIGNAL(finished()), alignmentDialog, SLOT(close()));
 		return;
 	}
-	
+
 	if (alignmentDialog->peakDetectionAlgo->currentText() == "Compound Database Search") {
 		workerThread = newWorkerThread("alignUsingDatabase");
 		mavenParameters->setCompounds(DB.getCopoundsSubset(alignmentDialog->selectDatabaseComboBox->currentText().toStdString()));
@@ -3281,7 +3318,7 @@ QWidget* MainWindowWidgetAction::createWidget(QWidget *parent) {
 		btnNext->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 		btnNext->setToolTip(tr("History Forward (Ctrl+Right)"));
 		btnNext->setShortcut(tr("Ctrl+Right"));
-		connect(btnNext, SIGNAL(clicked()), mw, SLOT(historyNext()));		
+		connect(btnNext, SIGNAL(clicked()), mw, SLOT(historyNext()));
 		return btnNext;
 
 	}
@@ -3379,14 +3416,14 @@ QWidget* MainWindowWidgetAction::createWidget(QWidget *parent) {
 
 	}
 	else if (btnName == "btnShowBoxplot") {
-		
+
 		QToolButton *btnShowBoxplot = new QToolButton(parent);
 		btnShowBoxplot->setIcon(QIcon(rsrcPath + "/boxplot.png"));
 		btnShowBoxplot->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 		btnShowBoxplot->setToolTip(tr("Show Boxplot"));
 		btnShowBoxplot->setCheckable(true);
 		btnShowBoxplot->setChecked(false);
-		
+
 		connect(btnShowBoxplot,SIGNAL(toggled(bool)),  mw->getEicWidget(), SLOT(showBoxPlot(bool)));
 		connect(btnShowBoxplot,SIGNAL(toggled(bool)), mw->getEicWidget(), SLOT(replot()));
 
@@ -3562,7 +3599,7 @@ PeakGroup::QType MainWindow::getUserQuantType() {
 		else if (type == "Retention Time")
 			return PeakGroup::RetentionTime;
 		//TODO: Sahil-Kiran, Added while merging mainwindow
-		else if (type  == "AreaNotCorrected") 
+		else if (type  == "AreaNotCorrected")
 			return PeakGroup::AreaNotCorrected;
         else if (type  == "AreaTopNotCorrected")
             return PeakGroup::AreaTopNotCorrected;
