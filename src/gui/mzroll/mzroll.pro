@@ -60,6 +60,8 @@ INCLUDEPATH +=  $$top_srcdir/src/core/libmaven  \
                 $$top_srcdir/3rdparty/libdate/ \
                 $$top_srcdir/3rdparty/ErrorHandling \
                 $$top_srcdir/3rdparty/Logger \
+                $$top_srcdir/3rdparty/aws-sdk-cpp/aws-cpp-sdk-s3/ \
+                $$top_srcdir/3rdparty/aws-sdk-cpp/aws-cpp-sdk-core/ \
                 $$top_srcdir/src/pollyCLI
 
 QMAKE_LFLAGS += -L$$top_builddir/libs/
@@ -71,7 +73,7 @@ win32 {
 }
 
 
-LIBS +=  -lmaven -lobiwarp -lpugixml -lneural -lcsvparser -lpls -lErrorHandling -lLogger -lcdfread -lnetcdf -lz -lpollyCLI               #64bit
+LIBS +=  -lmaven -lobiwarp -lpugixml -lneural -lcsvparser -lpls -lErrorHandling -lLogger -lcdfread -lnetcdf -lz -lpollyCLI -laws-sdk-cpp               #64bit
 
 macx {
 
@@ -170,7 +172,8 @@ HEADERS +=  stable.h \
                     controller.h \
                     numeric_treewidgetitem.h \
                     ElmavCrashHandler.h \
-    		uploadtrainingdatadialog.h
+    		        uploadtrainingdatadialog.h \
+                    uploadData.h
 
 
 
@@ -237,7 +240,8 @@ database.cpp \
     controller.cpp \
     numeric_treewidgetitem.cpp \
     ElmavCrashHandler.cpp \
-    uploadtrainingdatadialog.cpp
+    uploadtrainingdatadialog.cpp \
+    uploadData.cpp
 
 macx{
     SOURCES -= ElmavCrashHandler.cpp

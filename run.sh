@@ -1,5 +1,9 @@
 OMP_CANCELLATION=true
-export QT_SELECT=qt5 
+export QT_SELECT=qt5
+
+cmake -DBUILD_ONLY="core;s3" -B./3rdparty/aws-sdk-cpp -H./3rdparty/aws-sdk-cpp;
+make -j4 -C ./3rdparty/aws-sdk-cpp;
+
 flag=100   #this flag check wether qt running in debug mode or not
 while true; do
     read -p "Do you wish to install this program in release mode? " yn
@@ -26,4 +30,3 @@ if [ $systemType == "linux" ] && [ $flag == 10 ]; then
     lcov --capture --directory ./ --output-file ../coverage.info --no-external
     genhtml ../coverage.info --output-directory ../coverage
 fi
-
